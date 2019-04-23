@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kakao_app_key">6e1ea0fb6ca5468f5723ec8028d9be29</string> <!--카카오 개발자 페이지에서 발급받은 네이티브앱키를 여기에-->
+</resources>
