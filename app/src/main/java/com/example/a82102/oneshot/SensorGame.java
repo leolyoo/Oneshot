@@ -11,8 +11,14 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class SensorGame extends Activity implements SensorEventListener {
     SensorManager sensorManager;
@@ -25,6 +31,30 @@ public class SensorGame extends Activity implements SensorEventListener {
     int pitch;
     int roll;
     MyView myView;
+    LinearLayout container;
+    TextView timer;
+    int i;
+    MyHandler myHandler;
+    boolean isOver = false;
+
+    class MyHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    timer.setText(String.valueOf(i));
+                    break;
+                case 1:
+                    container.removeAllViews();
+                    timer.setText("병을 지켰습니다!");
+                    break;
+                case 2:
+                    container.removeAllViews();
+                    timer.setText("병이 깨졌습니다. 버틴 시간 : " + i + "초");
+                    break;
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +63,28 @@ public class SensorGame extends Activity implements SensorEventListener {
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         myView = new MyView(this);
-        setContentView(myView); //activity_main.xml파일을 사용하지 않고 아래 생성한 MyView클래스로 코드 레벨에서 화면 구현, activity_main.xml파일에서 뷰컨테이너를 만든 후 연결하여 위젯처럼 사용할 수 있음
+        setContentView(R.layout.activity_sensorgame);
+        container = findViewById(R.id.container);
+        container.addView(myView);
+        timer = findViewById(R.id.timer);
+
+        myHandler = new MyHandler();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                i = 1;
+                while (isOver == false && i <= 30) {
+                    SystemClock.sleep(1000);
+                    if (isOver == false)
+                        myHandler.sendEmptyMessage(0);
+                    i++;
+                }
+                if (!isOver) {
+                    myHandler.sendEmptyMessage(1);
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -73,84 +124,83 @@ public class SensorGame extends Activity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-}
 
-class MyView extends View {
-    Bitmap image;
-    Paint paint;
-    int centerX;
-    int centerY;
-    int imageX;
-    int imageY;
-    int imageWidth;
-    int imageHeight;
-    int width;
-    int height;
-    boolean isRun = true;
-    boolean isOver = false;
+    class MyView extends View {
+        Bitmap image;
+        Paint paint;
+        int centerX;
+        int centerY;
+        int imageX;
+        int imageY;
+        int imageWidth;
+        int imageHeight;
+        int width;
+        int height;
+        boolean isRun = true;
 
-    public MyView(Context context) {
-        super(context);
-    }
-
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (isRun) { //코드 실행에서 한 번만 실행되는 코드들
-            paint = new Paint();
-            paint.setTextSize(30);
-            width = getWidth();
-            height = getHeight();
-            centerX = width / 2;
-            centerY = height / 2;
-            imageX = centerX;
-            imageY = centerY;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
-            image = BitmapFactory.decodeResource(getResources(), R.drawable.bottle, options);
-            imageWidth = image.getWidth();
-            imageHeight = image.getHeight();
-            isRun = false;
-        }
-        canvas.drawBitmap(image, imageX - (imageWidth / 2), imageY - (imageHeight / 2), null);
-        if (isOver) {
-            canvas.drawText("병이 깨졌습니다.", 10, 50, paint);
-        }
-    }
-
-    void updateImagePosition(int pitch, int roll) { //이미지의 위치를 방향에 따라 이동시켜주는 메소드
-        Log.i("김치전", "pitch : " + pitch + ", roll : " + roll);
-        int thisX = imageX;
-        int thisY = imageY;
-
-        thisX = thisX + roll;
-        thisY = thisY - pitch;
-
-        if (thisX < 0) {
-            thisX = 0;
-            isOver = true;
+        public MyView(Context context) {
+            super(context);
         }
 
-        if (thisX > width) {
-            thisX = width;
-            isOver = true;
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            if (isRun) { //코드 실행에서 한 번만 실행되는 코드들
+                paint = new Paint();
+                paint.setTextSize(30);
+                width = getWidth();
+                height = getHeight();
+                centerX = width / 2;
+                centerY = height / 2;
+                imageX = centerX;
+                imageY = centerY;
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                image = BitmapFactory.decodeResource(getResources(), R.drawable.bottle, options);
+                imageWidth = image.getWidth();
+                imageHeight = image.getHeight();
+                isRun = false;
+            }
+            canvas.drawBitmap(image, imageX - (imageWidth / 2), imageY - (imageHeight / 2), null);
+            if (isOver) {
+                myHandler.sendEmptyMessage(2);
+            }
         }
 
-        if (thisY < 0) {
-            thisY = 0;
-            isOver = true;
+        void updateImagePosition(int pitch, int roll) { //이미지의 위치를 방향에 따라 이동시켜주는 메소드
+            Log.i("김치전", "pitch : " + pitch + ", roll : " + roll);
+            int thisX = imageX;
+            int thisY = imageY;
+
+            thisX = thisX + roll;
+            thisY = thisY - pitch;
+
+            if (thisX < 0) {
+                thisX = 0;
+                isOver = true;
+            }
+
+            if (thisX > width) {
+                thisX = width;
+                isOver = true;
+            }
+
+            if (thisY < 0) {
+                thisY = 0;
+                isOver = true;
+            }
+
+            if (thisY > height) {
+                thisY = height;
+                isOver = true;
+            }
+
+            imageX = thisX;
+            Log.i("김치전", "imageX = " + imageX + ", imageY = " + imageY);
+            imageY = thisY;
+
+            invalidate();
         }
-
-        if (thisY > height) {
-            thisY = height;
-            isOver = true;
-        }
-
-        imageX = thisX;
-        Log.i("김치전", "imageX = " + imageX + ", imageY = " + imageY);
-        imageY = thisY;
-
-        invalidate();
     }
 }

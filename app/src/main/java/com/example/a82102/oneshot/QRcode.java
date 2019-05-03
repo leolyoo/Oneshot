@@ -28,14 +28,16 @@ public class QRcode extends Activity {
         setContentView(R.layout.activity_qrcode);
 
         //View Objects
-        buttonScan = (Button) findViewById(R.id.buttonScan);
-        textViewName = (TextView) findViewById(R.id.textViewName);
-        textViewAddress = (TextView) findViewById(R.id.textViewAddress);
-        textViewResult = (TextView) findViewById(R.id.textViewResult);
+        buttonScan = findViewById(R.id.buttonScan);
+        textViewName = findViewById(R.id.textViewName);
+        textViewAddress = findViewById(R.id.textViewAddress);
+        textViewResult = findViewById(R.id.textViewResult);
 
         //intializing scan object
         qrScan = new IntentIntegrator(this);
 
+        qrScan.setPrompt("Scanning...");
+        qrScan.initiateScan();
         //button onClick
         buttonScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
