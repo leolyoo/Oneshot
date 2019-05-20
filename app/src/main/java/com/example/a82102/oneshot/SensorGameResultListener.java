@@ -1,5 +1,5 @@
 package com.example.a82102.oneshot;
 
-public interface GameResultListener {
+public interface SensorGameResultListener {
     void onGameOver();
 }

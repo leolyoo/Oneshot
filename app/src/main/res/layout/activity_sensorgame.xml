@@ -7,7 +7,7 @@
     android:background="@color/bg"
     android:gravity="center|top"
     android:orientation="vertical"
-    tools:context=".SensorGame">
+    tools:context=".SensorSensorGame">
 
     <TextView
         android:id="@+id/count"

@@ -15,7 +15,7 @@ public class SensorGameView extends View {
     double dstY;
     Bitmap bitmap;
     Bitmap bgBitmap;
-    GameResultListener gameResultListener;
+    SensorGameResultListener sensorGameResultListener;
 
     public SensorGameView(Context context) {
         super(context);
@@ -60,11 +60,11 @@ public class SensorGameView extends View {
             dstY = dstY - pitch;
             invalidate();
         } else {
-            gameResultListener.onGameOver();
+            sensorGameResultListener.onGameOver();
         }
     }
 
-    void setGameResultListener(GameResultListener gameResultListener) {
-        this.gameResultListener = gameResultListener;
+    void setSensorGameResultListener(SensorGameResultListener sensorGameResultListener) {
+        this.sensorGameResultListener = sensorGameResultListener;
     }
 }
