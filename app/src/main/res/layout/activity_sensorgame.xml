@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:gravity="center|top"
     android:orientation="vertical"
     tools:context=".SensorGame">
 
     <TextView
-        android:id="@+id/timer"
-        android:layout_width="match_parent"
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0" />
+        android:textColor="@color/zxing_status_text"
+        android:textSize="30sp"
+        android:textStyle="normal" />
 
     <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:orientation="vertical"></LinearLayout>
+
 </LinearLayout>

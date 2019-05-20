@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg"
+    android:orientation="vertical"
     tools:context=".Game">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="100dp" >
+        android:layout_marginBottom="100dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -50,7 +50,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/sensorgame" />
-
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>

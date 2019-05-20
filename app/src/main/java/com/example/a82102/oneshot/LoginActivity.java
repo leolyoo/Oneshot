@@ -6,17 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class LoginActivity extends Activity implements View.OnClickListener{
-
-    Button kmember, nmember;
-
+public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
-        kmember = (Button) findViewById(R.id.kakaologin);
-        nmember = (Button) findViewById(R.id.nonmember);
 
         findViewById(R.id.kakaologin).setOnClickListener(this);
         findViewById(R.id.nonmember).setOnClickListener(this);
@@ -25,10 +19,10 @@ public class LoginActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.kakaologin :
+            case R.id.kakaologin:
                 startActivity(new Intent(this, Home.class));
                 break;
-            case R.id.nonmember :
+            case R.id.nonmember:
                 startActivity(new Intent(this, NmHome.class));
                 break;
         }

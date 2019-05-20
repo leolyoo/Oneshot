@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg"
+    android:orientation="vertical"
     tools:context=".Home">
 
     <LinearLayout
@@ -37,8 +37,6 @@
             android:layout_weight="1"
             android:background="#00ff0000"
             android:src="@drawable/more" />
-
-
     </LinearLayout>
 
     <ImageButton
@@ -47,5 +45,4 @@
         android:layout_height="match_parent"
         android:background="#00ff0000"
         android:src="@drawable/start" />
-
 </LinearLayout>

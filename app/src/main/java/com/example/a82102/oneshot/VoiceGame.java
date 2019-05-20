@@ -54,7 +54,6 @@ public class VoiceGame extends Activity implements View.OnClickListener, SpeechR
         sample = "술은 인간의 성품을 비추는 거울이다"; //샘플 문장, 마음대로 바꿀 수 있음
         textView.setText(sample);
 
-
         sampleArray = splitString(sample);
 
         SpeechRecognizerManager.getInstance().initializeLibrary(this);

@@ -36,7 +36,7 @@ public class MoleGame extends Activity {
         start = (Button)findViewById(R.id.start);
 
         for(int i = 0; i<img_array.length; i++){
-            /*int img_id = getResources().getIdentifier("imageView"+i+1, "id", "com.example.pc_20.molegame");*/
+            /*int img_id = getResources().getIdentifier("imageView"+count+1, "id", "com.example.pc_20.molegame");*/
             img_array[i] = (ImageView)findViewById(imageID[i]);
             img_array[i].setImageResource(R.drawable.down);
             img_array[i].setTag(TAG_OFF);
