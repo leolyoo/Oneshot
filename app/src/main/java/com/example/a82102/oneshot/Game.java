@@ -31,7 +31,7 @@ public class Game extends Activity implements View.OnClickListener {
                 startActivity(new Intent(this, VoiceGame.class));
                 break;
             case R.id.sensor:
-                startActivity(new Intent(this, SensorSensorGame.class));
+                startActivity(new Intent(this, SensorGame.class));
                 break;
         }
     }

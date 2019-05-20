@@ -29,7 +29,7 @@
         <activity android:name=".MoleGame" />
         <activity android:name=".MoleGameResult" />
         <activity android:name=".MemoryGame" />
-        <activity android:name=".SensorSensorGame" />
+        <activity android:name=".SensorGame" />
         <activity android:name=".VoiceGame"></activity>
         <meta-data
             android:name="com.kakao.sdk.AppKey"

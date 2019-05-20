@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.text.MessageFormat;
 
-public class SensorSensorGame extends Activity implements OrientationChangeListener, SensorGameResultListener {
+public class SensorGame extends Activity implements OrientationChangeListener, SensorGameResultListener {
     OrientationSensor orientationSensor;
     SensorGameView sensorGameView;
     LinearLayout container;

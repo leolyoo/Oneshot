@@ -31,30 +31,30 @@ public class MoleGame extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_molegame);
 
-        time = (TextView) findViewById(R.id.time);
-        count = (TextView)findViewById(R.id.count);
-        start = (Button)findViewById(R.id.start);
+        time = findViewById(R.id.time);
+        count = findViewById(R.id.count);
+        start = findViewById(R.id.start);
 
-        for(int i = 0; i<img_array.length; i++){
+        for (int i = 0; i < img_array.length; i++) {
             /*int img_id = getResources().getIdentifier("imageView"+stage+1, "id", "com.example.pc_20.molegame");*/
-            img_array[i] = (ImageView)findViewById(imageID[i]);
+            img_array[i] = findViewById(imageID[i]);
             img_array[i].setImageResource(R.drawable.down);
             img_array[i].setTag(TAG_OFF);
 
             img_array[i].setOnClickListener(new View.OnClickListener() { //두더지이미지에 온클릭리스너
                 @Override
                 public void onClick(View v) {
-                    if(((ImageView)v).getTag().toString().equals(TAG_ON)){
+                    if (v.getTag().toString().equals(TAG_ON)) {
                         Toast.makeText(getApplicationContext(), "good", Toast.LENGTH_LONG).show();
                         count.setText(String.valueOf(score++));
                         ((ImageView) v).setImageResource(R.drawable.down);
                         v.setTag(TAG_OFF);
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "bad", Toast.LENGTH_LONG).show();
-                        if(score<=0){
-                            score=0;
+                        if (score <= 0) {
+                            score = 0;
                             count.setText(String.valueOf(score));
-                        }else{
+                        } else {
                             count.setText(String.valueOf(score--));
                         }
                         ((ImageView) v).setImageResource(R.drawable.standup);
@@ -76,14 +76,14 @@ public class MoleGame extends Activity {
 
                 new Thread(new timeCheck()).start();
 
-                for(int i = 0; i<img_array.length; i++){
+                for (int i = 0; i < img_array.length; i++) {
                     new Thread(new DThread(i)).start();
                 }
             }
         });
     }
 
-    Handler onHandler = new Handler(){
+    Handler onHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             img_array[msg.arg1].setImageResource(R.drawable.standup);
@@ -91,7 +91,7 @@ public class MoleGame extends Activity {
         }
     };
 
-    Handler offHandler = new Handler(){
+    Handler offHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             img_array[msg.arg1].setImageResource(R.drawable.down);
@@ -100,29 +100,29 @@ public class MoleGame extends Activity {
         }
     };
 
-    public class DThread implements Runnable{ //두더지를 올라갔다 내려갔다 해줌
-        int index = 0; //두더지 번호
+    public class DThread implements Runnable { //두더지를 올라갔다 내려갔다 해줌
+        int index; //두더지 번호
 
-        DThread(int index){
-            this.index=index;
+        DThread(int index) {
+            this.index = index;
         }
 
         @Override
         public void run() {
-            while(true){
+            while (true) {
                 try {
                     Message msg1 = new Message();
-                    int offtime = new Random().nextInt(5000)  + 500;
+                    int offtime = new Random().nextInt(5000) + 500;
                     Thread.sleep(offtime); //두더지가 내려가있는 시간
 
 
                     msg1.arg1 = index;
                     onHandler.sendMessage(msg1);
 
-                    int ontime = new Random().nextInt(1500)+500;
+                    int ontime = new Random().nextInt(1500) + 500;
                     Thread.sleep(ontime); //두더지가 올라가있는 시간
                     Message msg2 = new Message();
-                    msg2.arg1= index;
+                    msg2.arg1 = index;
                     offHandler.sendMessage(msg2);
 
                 } catch (InterruptedException e) {
