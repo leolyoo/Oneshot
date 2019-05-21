@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.PopupMenu;
 
 public class Home extends Activity implements View.OnClickListener {
 
@@ -26,6 +27,8 @@ public class Home extends Activity implements View.OnClickListener {
                 break;
             case R.id.start:
                 startActivity(new Intent(this, Game.class));
+                break;
+            case R.id.more:
                 break;
         }
     }
