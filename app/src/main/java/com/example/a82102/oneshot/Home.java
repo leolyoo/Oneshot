@@ -1,17 +1,31 @@
 package com.example.a82102.oneshot;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 
-public class Home extends Activity implements View.OnClickListener {
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+
+public class Home extends BaseActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    PopupMenu submenu;
+    MenuInflater menuInflater;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        submenu = new PopupMenu(this, findViewById(R.id.more));
+        menuInflater = submenu.getMenuInflater();
+        menu = submenu.getMenu();
+        menuInflater.inflate(R.menu.home_submenu, menu);
+        submenu.setOnMenuItemClickListener(this);
 
         findViewById(R.id.qrcode).setOnClickListener(this);
         findViewById(R.id.home).setOnClickListener(this);
@@ -29,7 +43,29 @@ public class Home extends Activity implements View.OnClickListener {
                 startActivity(new Intent(this, Game.class));
                 break;
             case R.id.more:
+                submenu.show();
                 break;
         }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.profile:
+                return true;
+            case R.id.point:
+                return true;
+            case R.id.logout:
+                UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                    @Override
+                    public void onCompleteLogout() {
+                        redirectLoginActivity();
+                    }
+                });
+                return true;
+                default:
+                    break;
+        }
+        return false;
     }
 }
