@@ -26,13 +26,7 @@ import android.widget.RadioGroup;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 추가로 받고자 하는 사용자 정보를 나타내는 layout
- * 이름, 나이, 성별을 입력할 수 있다.
- * @author MJ
- */
 public class ExtraUserPropertyLayout extends FrameLayout {
-    // property key
     private  static final String NAME_KEY = "name";
     private  static final String AGE_KEY = "age";
     private  static final String GENDER_KEY = "gender";
