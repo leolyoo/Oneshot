@@ -1,6 +1,7 @@
 package com.example.a82102.oneshot;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -140,6 +141,10 @@ public class VoiceGame extends Activity implements View.OnClickListener, SpeechR
 
         setButtonsStatus(true);
         client = null;
+
+        Intent intent = GameResultActivity.getResultIntent(getApplicationContext(), GameResultActivity.TAG_VOICE, (int) score);
+        startActivity(intent);
+        finish();
     }
 
     @Override

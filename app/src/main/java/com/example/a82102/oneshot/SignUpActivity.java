@@ -16,14 +16,14 @@ import com.kakao.util.helper.log.Logger;
 
 import java.util.Map;
 
-public class SignupActivity extends BaseActivity {
+public class SignUpActivity extends BaseActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestMe();
     }
 
-    protected void showSignup() {
+    protected void showSignUp() {
         setContentView(R.layout.layout_usermgmt_signup);
         final ExtraUserPropertyLayout extraUserPropertyLayout = findViewById(R.id.extra_user_property);
         findViewById(R.id.buttonSignup).setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class SignupActivity extends BaseActivity {
             @Override
             public void onSuccess(MeV2Response result) {
                 if (result.hasSignedUp() == OptionalBoolean.FALSE) {
-                    showSignup();
+                    showSignUp();
                 } else {
                     redirectMainActivity();
                 }

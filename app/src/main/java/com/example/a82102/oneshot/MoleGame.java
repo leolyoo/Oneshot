@@ -57,8 +57,8 @@ public class MoleGame extends Activity {
                         } else {
                             count.setText(String.valueOf(score--));
                         }
-                        ((ImageView) v).setImageResource(R.drawable.standup);
-                        v.setTag(TAG_ON);
+                        /*((ImageView) v).setImageResource(R.drawable.standup);
+                        v.setTag(TAG_ON);*/
                     }
                 }
             });
@@ -156,8 +156,11 @@ public class MoleGame extends Activity {
                     e.printStackTrace();
                 }
             }
-            Intent intent = new Intent(MoleGame.this, MoleGameResult.class);
-            intent.putExtra("score", score);
+            score = score * 10 / 3;
+            if (score > 100)
+                score = 100;
+
+            Intent intent = GameResultActivity.getResultIntent(getApplicationContext(), GameResultActivity.TAG_MOLE, score);
             startActivity(intent);
             finish();
         }

@@ -1,6 +1,7 @@
 package com.example.a82102.oneshot;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
@@ -108,9 +109,16 @@ public class MemoryGame extends Activity implements View.OnClickListener {
             clickedIndex++;
         } else {
             textView.setText(MessageFormat.format("{0}단계 : 틀렸습니다.", stage));
+            int score = stage * 10;
+            if (score > 100) {
+                score = 100;
+            }
             stage = 0;
             setButtonsStatus(false);
             findViewById(R.id.start).setEnabled(true);
+            Intent intent = GameResultActivity.getResultIntent(this, GameResultActivity.TAG_MEMORY, score);
+            startActivity(intent);
+            finish();
         }
     }
 

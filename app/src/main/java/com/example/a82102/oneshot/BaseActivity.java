@@ -11,7 +11,7 @@ public abstract class BaseActivity extends Activity {
     }
 
     protected void redirectSignupActivity() {
-        final Intent intent = new Intent(this, SignupActivity.class);
+        final Intent intent = new Intent(this, SignUpActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
