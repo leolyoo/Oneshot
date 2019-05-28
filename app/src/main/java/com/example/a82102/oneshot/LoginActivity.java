@@ -3,6 +3,7 @@ package com.example.a82102.oneshot;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -62,6 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         public void onSessionOpenFailed(KakaoException exception) {
             if(exception != null) {
                 Logger.e(exception);
+                Toast.makeText(getApplicationContext(), exception.toString(), Toast.LENGTH_LONG).show();
             }
         }
     }

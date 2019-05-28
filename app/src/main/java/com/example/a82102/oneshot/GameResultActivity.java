@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameResultActivity extends Activity {
@@ -16,6 +18,7 @@ public class GameResultActivity extends Activity {
     int score = 0;
     TextView tagTextView;
     TextView scoreTextView;
+    ImageView resultImageView;
 
     public static Intent getResultIntent(Context context, String tag, int score) {
         Intent intent = new Intent(context, GameResultActivity.class);
@@ -39,8 +42,44 @@ public class GameResultActivity extends Activity {
 
         tagTextView = findViewById(R.id.tag);
         scoreTextView = findViewById(R.id.score);
+        resultImageView = findViewById(R.id.image_result);
+
 
         tagTextView.setText(tag);
         scoreTextView.setText(String.valueOf(score));
+
+        if (tag.equalsIgnoreCase(TAG_MOLE)) {
+            if (score >= 90) {
+                resultImageView.setImageResource(R.drawable.mole_sober);
+            } else if (score >= 60) {
+                resultImageView.setImageResource(R.drawable.mole_tipsy);
+            } else {
+                resultImageView.setImageResource(R.drawable.mole_drunk);
+            }
+        } else if (tag.equalsIgnoreCase(TAG_MEMORY)) {
+            if (score >= 90) {
+                resultImageView.setImageResource(R.drawable.memory_sober);
+            } else if (score >= 60) {
+                resultImageView.setImageResource(R.drawable.memory_tipsy);
+            } else {
+                resultImageView.setImageResource(R.drawable.memory_drunk);
+            }
+        } else if (tag.equalsIgnoreCase(TAG_VOICE)) {
+            if (score >= 90) {
+                resultImageView.setImageResource(R.drawable.voice_sober);
+            } else if (score >= 60) {
+                resultImageView.setImageResource(R.drawable.voice_tipsy);
+            } else {
+                resultImageView.setImageResource(R.drawable.voice_drunk);
+            }
+        } else if (tag.equalsIgnoreCase(TAG_SENSOR)) {
+            if (score >= 90) {
+                resultImageView.setImageResource(R.drawable.sensor_sober);
+            } else if (score >= 60) {
+                resultImageView.setImageResource(R.drawable.sensor_tipsy);
+            } else {
+                resultImageView.setImageResource(R.drawable.sensor_drunk);
+            }
+        }
     }
 }
