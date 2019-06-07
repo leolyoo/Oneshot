@@ -3,6 +3,7 @@ package com.example.a82102.oneshot;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -17,7 +18,7 @@ public class MoleGame extends Activity {
 
     TextView time;
     TextView count;
-    Button start;
+//    Button start;
 
     ImageView[] img_array = new ImageView[9];
     int[] imageID = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4, R.id.imageView5, R.id.imageView6, R.id.imageView7, R.id.imageView8, R.id.imageView9};
@@ -33,7 +34,7 @@ public class MoleGame extends Activity {
 
         time = findViewById(R.id.time);
         count = findViewById(R.id.count);
-        start = findViewById(R.id.start);
+//        start = findViewById(R.id.start);
 
         for (int i = 0; i < img_array.length; i++) {
             /*int img_id = getResources().getIdentifier("imageView"+stage+1, "id", "com.example.pc_20.molegame");*/
@@ -65,22 +66,52 @@ public class MoleGame extends Activity {
         }
 
         time.setText("30초");
-        count.setText("0마리");
+        count.setText("0");
 
-        start.setOnClickListener(new View.OnClickListener() {
+        new CountDownTimer(3000, 1000) {
+            int secondsUntilFinished;
+
             @Override
-            public void onClick(View v) {
+            public void onTick(long millisUntilFinished) {
+                secondsUntilFinished = (int) (millisUntilFinished / 1000);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        count.setText(String.valueOf(secondsUntilFinished + 1));
+                    }
+                });
+            }
 
-                start.setVisibility(View.GONE);
-                count.setVisibility(View.VISIBLE);
-
+            @Override
+            public void onFinish() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        count.setText("0");
+                    }
+                });
                 new Thread(new timeCheck()).start();
 
                 for (int i = 0; i < img_array.length; i++) {
                     new Thread(new DThread(i)).start();
                 }
             }
-        });
+        }.start();
+
+//        start.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                start.setVisibility(View.GONE);
+//                count.setVisibility(View.VISIBLE);
+//
+//                new Thread(new timeCheck()).start();
+//
+//                for (int i = 0; i < img_array.length; i++) {
+//                    new Thread(new DThread(i)).start();
+//                }
+//            }
+//        });
     }
 
     Handler onHandler = new Handler() {

@@ -18,6 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textColor="@color/zxing_status_text"
+            android:textSize="30sp"
             android:text="" />
 
         <TextView
@@ -25,14 +27,16 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textColor="@color/zxing_status_text"
+            android:textSize="30sp"
             android:text="" />
 
-        <Button
+        <!--<Button
             android:id="@+id/start"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="시작" />
+            android:text="시작" />-->
     </LinearLayout>
 
     <LinearLayout

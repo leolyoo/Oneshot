@@ -2,6 +2,7 @@ package com.example.a82102.oneshot;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Bundle;
 import android.view.View;
@@ -32,22 +33,37 @@ public class MemoryGame extends Activity implements View.OnClickListener {
         runnable = new Runnable() {
             @Override
             public void run() {
-                textView.setText(MessageFormat.format("{0}단계 : ", stage));
+                textView.setText(MessageFormat.format("{0}단계\n", stage));
                 clickedIndex = 0;
                 setButtonsStatus(true);
             }
         };
         random = new Random();
         setButtonsStatus(false);
+        new CountDownTimer(3000, 1000) {
+            int secondsUntilFinished;
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                secondsUntilFinished = (int) (millisUntilFinished / 1000);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textView.setText(String.valueOf(secondsUntilFinished + 1));
+                    }
+                });
+            }
+
+            @Override
+            public void onFinish() {
+                setStage();
+            }
+        }.start();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.start:
-                findViewById(R.id.start).setEnabled(false);
-                setStage();
-                break;
             case R.id.button1:
                 checkNumber(1);
                 break;
@@ -79,7 +95,6 @@ public class MemoryGame extends Activity implements View.OnClickListener {
     }
 
     private void setButtonsListenable(View.OnClickListener onClickListener) {
-        findViewById(R.id.start).setOnClickListener(onClickListener);
         findViewById(R.id.button1).setOnClickListener(onClickListener);
         findViewById(R.id.button2).setOnClickListener(onClickListener);
         findViewById(R.id.button3).setOnClickListener(onClickListener);
@@ -95,27 +110,26 @@ public class MemoryGame extends Activity implements View.OnClickListener {
         stage++;
         setButtonsStatus(false);
         randomNums = createRandomNums(stage);
-        textView.setText(MessageFormat.format("{0}단계 : {1}", stage, Arrays.toString(randomNums)));
+        textView.setText(MessageFormat.format("{0}단계\n{1}", stage, Arrays.toString(randomNums)));
         handler.postDelayed(runnable, 3000);
     }
 
     void checkNumber(int clickedNum) { //숫자를 체크하고 틀리면 결과를 알려주는 메서드
 
         if (randomNums[clickedIndex] == clickedNum) {
-            textView.setText(MessageFormat.format("{0}단계 : {1}번째 자리 정답!", stage, clickedIndex + 1));
+            textView.setText(MessageFormat.format("{0}단계\n{1}번째 자리 정답!", stage, clickedIndex + 1));
             if (clickedIndex == randomNums.length - 1) {
                 setStage();
             }
             clickedIndex++;
         } else {
-            textView.setText(MessageFormat.format("{0}단계 : 틀렸습니다.", stage));
+            textView.setText(MessageFormat.format("{0}단계\n틀렸습니다.", stage));
             int score = stage * 10;
             if (score > 100) {
                 score = 100;
             }
             stage = 0;
             setButtonsStatus(false);
-            findViewById(R.id.start).setEnabled(true);
             Intent intent = GameResultActivity.getResultIntent(this, GameResultActivity.TAG_MEMORY, score);
             startActivity(intent);
             finish();
