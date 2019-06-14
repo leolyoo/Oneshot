@@ -54,6 +54,7 @@ public class Home extends BaseActivity implements View.OnClickListener, PopupMen
             case R.id.profile:
                 return true;
             case R.id.point:
+                startActivity(new Intent(this, PointActivity.class));
                 return true;
             case R.id.logout:
                 UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
