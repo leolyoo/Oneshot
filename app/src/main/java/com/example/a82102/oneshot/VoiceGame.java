@@ -3,6 +3,8 @@ package com.example.a82102.oneshot;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -53,6 +55,16 @@ public class VoiceGame extends Activity implements View.OnClickListener, SpeechR
     }
 
     public void setButtonsStatus(boolean enabled) { //버튼의 활성/비활성 상태를 변경해주는 메소드
+        if (enabled) {
+            findViewById(R.id.start).setVisibility(View.VISIBLE);
+            findViewById(R.id.stop).setVisibility(View.GONE);
+            findViewById(R.id.cancel).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.start).setVisibility(View.GONE);
+            findViewById(R.id.stop).setVisibility(View.VISIBLE);
+            findViewById(R.id.cancel).setVisibility(View.VISIBLE);
+        }
+
         findViewById(R.id.start).setEnabled(enabled);
         findViewById(R.id.stop).setEnabled(!enabled);
         findViewById(R.id.cancel).setEnabled(!enabled);
@@ -142,9 +154,15 @@ public class VoiceGame extends Activity implements View.OnClickListener, SpeechR
         setButtonsStatus(true);
         client = null;
 
-        Intent intent = GameResultActivity.getResultIntent(getApplicationContext(), GameResultActivity.TAG_VOICE, (int) score);
-        startActivity(intent);
-        finish();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SystemClock.sleep(3000);
+                Intent intent = GameResultActivity.getResultIntent(getApplicationContext(), GameResultActivity.TAG_VOICE, (int) score);
+                startActivity(intent);
+                finish();
+            }
+        }).start();
     }
 
     @Override
