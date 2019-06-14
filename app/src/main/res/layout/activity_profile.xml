@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
+        android:text="고수영님의 기록"
+        android:textColor="@color/zxing_status_text"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/image_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:adjustViewBounds="true"
+        android:paddingHorizontal="100dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/average_sober" />
+
+    <TextView
+        android:id="@+id/text_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2019년 6월 24일 06:25:33 | 두더지 | 100"
+        android:textColor="@color/zxing_status_text" />
+</LinearLayout>

@@ -52,6 +52,7 @@ public class Home extends BaseActivity implements View.OnClickListener, PopupMen
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.profile:
+                startActivity(new Intent(this, ProfileActivity.class));
                 return true;
             case R.id.point:
                 startActivity(new Intent(this, PointActivity.class));

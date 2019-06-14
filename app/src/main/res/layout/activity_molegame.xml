@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg"
+    android:orientation="vertical"
     tools:context=".MoleGame">
 
     <LinearLayout
@@ -18,18 +18,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text=""
             android:textColor="@color/zxing_status_text"
-            android:textSize="30sp"
-            android:text="" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:text=""
             android:textColor="@color/zxing_status_text"
-            android:textSize="30sp"
-            android:text="" />
+            android:textSize="30sp" />
 
         <!--<Button
             android:id="@+id/start"
